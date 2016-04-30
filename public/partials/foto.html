@@ -1,0 +1,52 @@
+<div class="page-header text-center">
+    <h1>{{foto.titulo}}</h1>
+</div>
+
+<p ng-show="mensagem.length" class="alert alert-info">{{mensagem}}</p>
+
+<form novalidate name="formulario" class="row" ng-submit="submeter()">
+    <div class="col-md-6">
+        <div class="form-group">
+            <label>Título</label>
+            <input name="titulo" class="form-control" ng-model="foto.titulo" required ng-maxlength="20">
+            <spam class="form-control alert-danger" ng-show="formulario.$submitted && formulario.titulo.$error.required">
+                Titulo eh obrigatorio
+            </spam>
+            <spam class="form-control alert-danger" ng-show="formulario.$submitted && formulario.url.$error.maxlength">
+                Titulo deve conter no maximo 20 caracteres 
+            </spam>    
+        </div>
+        <div class="form-group">
+            <label>URL</label>
+            <input name="url" class="form-control" ng-model="foto.url" required>
+            <spam class="form-control alert-danger" ng-show="formulario.$submitted && formulario.url.$error.required">
+                Url eh obrigatoria
+            </spam>
+        </div>
+        <div class="form-group">
+            <label>Descrição</label>
+            <textarea name="descricao" class="form-control" ng-model="foto.descricao">
+            </textarea>
+        </div>
+
+        <div class="form-group">
+            <select ng-model="foto.grupo" name="grupo" class="form-control"
+                ng-controller="GrupoController"
+                ng-options="grupo._id as (grupo.nome | uppercase) for grupo in grupos">
+                <option value="">Seleciona o grupo</option>
+            </select>
+            <spam class="form-control alert-danger" ng-show="formulario.$submitted && formulario.grupo.$error.required">
+                Grupo e obrigatorio
+            </spam>
+        </div>
+
+        <button type="submit" class="btn btn-primary" ng-disabled="formulario.$invalid">
+            Salvar
+        </button>
+         <a href="/" class="btn btn-primary">Voltar</a>
+        <hr>
+    </div>
+    <div class="col-md-6">
+        <minha-foto url="{{foto.url}}"></minha-foto>
+    </div>
+</form>
